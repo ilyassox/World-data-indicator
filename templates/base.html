@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ country_name }} Information</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+<body>
+    <h1>{{ country_name }} Information</h1>
+    {% if country_data %}
+    <p>Total Population: {{ country_data }}</p>
+    <p>CO2 emission : {{country_emission}} </p>
+    <p>Predictions : {{predictions}}</p>
+    <div id="graph-div"></div>
+    <div id="emission-div"></div>
+
+    <script>
+        // Define the graphData variable with the JSON string
+        var graphData = JSON.parse('{{ graph_json_pop | safe }}');
+
+        // Now you can use the graphData variable as needed
+        Plotly.react('graph-div', graphData.data, graphData.layout);
+    </script>
+
+    <script>
+        // Define the graphData variable with the JSON string
+        var emiData = JSON.parse('{{ graph_json_emi | safe }}');
+
+        // Now you can use the graphData variable as needed
+        Plotly.react('emission-div', emiData.data, emiData.layout);
+    </script>
+
+    
+
+    
+
+    {% else %}
+    <p>No data available for {{ country_name }}</p>
+    {% endif %}
+   
+</body>
+</html>
